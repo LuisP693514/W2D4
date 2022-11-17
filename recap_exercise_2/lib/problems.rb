@@ -2,12 +2,47 @@
 # of both of the given numbers
 def least_common_multiple(num_1, num_2)
 
+    product = num_1 * num_2
+
+    (1..product).each {|n|
+
+        factors_arr = factors(n)
+
+        return n if factors_arr.include?(num_1) && factors_arr.include?(num_2) && n >= [num_1, num_2].max
+
+    }
+
 end
 
+def factors(num)
+
+    (1..num).select {|n| num %n == 0}
+
+end
 
 # Write a method, most_frequent_bigram, that takes in a string and returns the two adjacent letters that appear the
 # most in the string.
 def most_frequent_bigram(str)
+
+    bigrams = Array.new
+
+    str.each_char.with_index {|c, i| bigrams << str[i] + str[i+1] if str[i+1]}
+
+    bigrams.select! {|ele| ele.length == 2}
+
+    bigram_frequency = bigrams.map {|ele| frequency(str, ele)}
+
+    bigrams[bigram_frequency.find_index(bigram_frequency.max)]
+
+end
+
+def frequency(str, bigram)
+
+    count = 0
+
+    str.each_char.with_index {|c, i| count += 1 if str[i..i+1].length == 2 && str[i..i+1] == bigram }
+
+    count
 
 end
 
@@ -16,6 +51,12 @@ class Hash
     # Write a method, Hash#inverse, that returns a new hash where the key-value pairs are swapped
     def inverse
 
+        hash = Hash.new
+
+        self.each {|k,v| hash[v] = k}
+
+        hash
+
     end
 end
 
@@ -23,6 +64,8 @@ end
 class Array
     # Write a method, Array#pair_sum_count, that takes in a target number returns the number of pairs of elements that sum to the given target
     def pair_sum_count(num)
+
+
 
     end
 
