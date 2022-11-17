@@ -65,8 +65,11 @@ class Array
     # Write a method, Array#pair_sum_count, that takes in a target number returns the number of pairs of elements that sum to the given target
     def pair_sum_count(num)
 
-        
+        count = 0
 
+        self.each.with_index {|num1, i1| self.each.with_index {|num2, i2| count += 1 if num1 + num2 == num && i2 > i1}}
+
+        count
 
     end
 
@@ -84,6 +87,39 @@ class Array
     #
     # This should remind you of the spaceship operator! Convenient :)
     def bubble_sort(&prc)
+
+
+        i = 0
+
+        sorted = false
+        while !sorted
+            sorted = true
+
+            (0...self.length-1).each {|i|
+        
+                if prc && self[i+1]
+
+                    if prc.call(self[i], self[i+1]) == 1
+                        sorted = false
+                        self[i], self[i+1] = self[i+1], self[i]
+
+                    end
+
+                else
+
+                    if self[i+1]
+                        if self[i] > self[i+1]
+                            sorted = false
+                            self[i], self[i+1] = self[i+1], self[i]
+                        end
+                    end
+                end
+
+            }
+
+        end
+
+        self
 
     end
 end
